@@ -7,5 +7,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('contact/',views.contact),
     path("first_app/",include("first_app.urls")),
+    # path("secondapp/",include("secondapp.urls")),
     path("",views.nai),
 ]
