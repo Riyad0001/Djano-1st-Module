@@ -4,5 +4,9 @@ from django.db import models
 class Student(models.Model):
     name=models.CharField(max_length=20)
     roll=models.IntegerField(primary_key=True)
-    section=models.TextField()
-    addres=models.TextField(default="Ryaan")
+    addres=models.TextField()
+    section=models.TextField(default="rIYADS")
+
+    def __str__(self):
+        return f"{self.name}, Roll: {self.roll}" 
+    

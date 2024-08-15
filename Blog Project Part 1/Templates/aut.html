@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block content %}
+  {% for items in data %}
+
+  <div class="d-flex justify-content-center">
+    <button class="btn btn-warning">{{ items.name }}
+        <a href="{% url 'edit_catagory' items.id%}" class="btn btn-dark">Edit</a>
+        <a href="{% url 'delete_catagory' items.id%}" class="btn btn-danger"
+          >DELET</a
+        >
+    </button>
+</div>
+
+  {% endfor %} {% endblock content %}
+</div>
