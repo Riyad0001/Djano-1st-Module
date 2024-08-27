@@ -1,0 +1,15 @@
+{% extends "base.html" %} {%block title%}Login{%endblock title%} 
+{% block content %} 
+{%if form.error%}
+<p>Wrong Userename or Password</p>
+{%else%}
+<p>Plesae Login by this form</p>
+{%endif%}
+<div class="login">
+    <form action="{%url 'login'%}" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit">Log-In</button>
+    </form>
+</div>
+{% endblock content %}

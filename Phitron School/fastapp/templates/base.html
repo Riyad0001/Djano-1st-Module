@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+<title>{%block title%}{%endblock title%}</title>
+<meta name="description" content="Our first page">
+<meta name="keywords" content="html tutorial template">
+<link rel="stylesheet" href="css\base.css">
+</head>
+<body>
+<div class="header">
+    <a href="/" class="logo">Ryaan's School</a>
+    {% if request.user.is_authenticated%}
+    <li><a href="{% url 'logout'%}">LogOut</a></li>
+    {%else%}
+    <li><a href="{% url 'login'%}">LogIn</a></li>
+    {%endif%}
+
+</div>
+<div>
+    {%block content%}
+    {%endblock%}
+</div>
+</body>
+</html>
