@@ -1,17 +1,47 @@
-{% extends "base.html" %} {% block content %} {% for dat in data%}
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{dat.taskTitle}}</h5>
-        <p class="card-text">{{dat.taskDescription}}</p>
-        <p class="card-text">{{dat.Assign_Date}}</p>
-        <p class="card-text">{{dat.catagory_name.}}</p>
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="row m-2">
+    {% for dat in data %}
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title">Task Id: {{ forloop.counter }}</h3>
+          <p class="card-text">
+            <strong>Assign Date:</strong> {{ dat.Assign_Date }}
+          </p>
+          <h5 class="card-title">
+            <strong>Task Title:</strong> {{ dat.taskTitle }}
+          </h5>
+          <p class="card-text">
+            <strong>Description:</strong> {{ dat.taskDescription }}
+          </p>
 
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+          <p class="card-text">
+            <strong>Categories:</strong>
+            {% for category in dat.catagory_name.all %}
+            <span class="badge bg-primary">{{ category.name }}</span>
+            {% empty %}
+            <span class="badge bg-secondary">No categories</span>
+            {% endfor %}
+          </p>
+          {% if dat.is_completed %}
+          <div class="mt-3">
+            <button class="btn btn-success w-100">Completed</button>
+          </div>
+          {% endif %} {% if not dat.is_completed %}
+          <div class="d-flex justify-content-between">
+            <a href="{% url 'edit_task' dat.id%}" class="btn btn-warning m-1"
+              >Edit</a
+            >
+            <a href="{% url 'delete_task' dat.id%}" class="btn btn-danger m-1"
+              >Delete</a
+            >
+          </div>
+          {% endif %}
+        </div>
       </div>
     </div>
+    {% endfor %}
   </div>
 </div>
-
-{% endfor %} {% endblock content %}
+{% endblock content %}
