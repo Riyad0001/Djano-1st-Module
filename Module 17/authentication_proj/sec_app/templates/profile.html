@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block content %}
+<h1>Welcome To Your Profile</h1>
+<h1>Hello {{user}}</h1>
+<a href="{% url 'pass_cng'%}">Change Your Password</a>
+</br>
+<a href="{% url 'pass_cng2'%}">Change Your Password Without Old Pass</a>
+{% if messages%} {% for m in messages%}
+<h3 class="bg-success p-3 text-white">{{m}}</h3>
+{% endfor %} {% endif %}
+<form method="post" novalidate>
+    {% csrf_token %}
+
+    <!-- Display non-field errors if any -->
+    {% if form.non_field_errors %}
+      {% for er in form.non_field_errors %}
+        <p class="bg-danger text-white">{{ er }}</p>
+      {% endfor %}
+    {% endif %}
+
+    <!-- Loop through form fields and apply styles -->
+    {% for fm in form %}
+      <div class="form-group">
+        {{ fm.label_tag }}
+        {{ fm }}
+        {{ fm.errors|striptags }}
+      </div>
+    {% endfor %}
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary">Update Data</button>
+  </form>
+{% endblock content %}

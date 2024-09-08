@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
+<style>
+  .success {
+    color: green;
+    text-align: center;
+    margin: auto;
+  }
+</style>
+
+{% if messages%} {% for m in messages%}
+<h1 {% if m.tags%} class="{{m.tags}}" {%endif%}>{{m}}</h1>
+{% endfor %} {% endif %}
+<form style="width: 79%; margin: auto" method="post">
+  <h1 class="success">Sign Up</h1>
+  {%csrf_token%}
+  <!-- {% for fm in form%}
+    {{fm.label_tag}}
+    {{fm}}
+    
+    {%endfor%} -->
+  {{form |crispy}}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</br>
+  <small>Already have an Account?<a href="{% url 'login'%}">Login</a></small>
+</form>
+
+{% endblock content %}

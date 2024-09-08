@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<style>
+  .login-container {
+    width: 50%;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-header {
+    text-align: center;
+    color: #343a40;
+    margin-bottom: 30px;
+    font-weight: bold;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .bg-danger {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .btn-primary {
+    width: 100%;
+    padding: 10px;
+  }
+</style>
+
+<div class="login-container">
+  <h1 class="login-header">Log In</h1>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <!-- Display non-field errors if any -->
+    {% if form.non_field_errors %}
+      {% for er in form.non_field_errors %}
+        <p class="bg-danger text-white">{{ er }}</p>
+      {% endfor %}
+    {% endif %}
+
+    <!-- Loop through form fields and apply styles -->
+    {% for fm in form %}
+      <div class="form-group">
+        {{ fm.label_tag }}
+        {{ fm }}
+        {{ fm.errors|striptags }}
+      </div>
+    {% endfor %}
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary">Log In</button>
+  </form>
+</div>
+
+{% endblock content %}
