@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+<a class="btn btn-warning m-auto" href="{% url 'edt_profile' %}">
+  Edit Profile
+</a>
+<div class="d-flex flex-wrap justify-content-center px-5 pt-5">
+  {% for items in data %}
+  <div class="col-sm-3">
+    <div class="card mx-2">
+      <div class="card-body">
+        <h5 class="card-title">{{items.title}}</h5>
+        <p class="card-text">{{items.content}}</p>
+        <p style="text-bold">
+          Author: {{items.author.first_name}} {{items.author.last_name}}
+        </p>
+        <p>
+          Catagory : {% for cat in items.catagory.all %}
+          <button class="btn btn-primary m-1 btn-sm">{{cat.name}}</button>
+          {%endfor %}
+        </p>
+        <a href="{% url 'edit_post' items.id%}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'delet_post' items.id%}" class="btn btn-danger"
+          >DELET</a
+        >
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}

@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from post import models as post_model
-from catagory import models as cat_model
-def home(request):
+from catagory.models import Catagory
+def home(request,catagory_slug=None):
     data=post_model.Post.objects.all()
-    return render(request,"home.html",{'data':data})
+    if catagory_slug is not None:
+        catagory=Catagory.objects.get(slug=catagory_slug)
+        data=post_model.Post.objects.filter(catagory=catagory)
+    catagory=Catagory.objects.all()
+    return render(request,"home.html",{'data':data,'catagory':catagory})
 def view_cat(request):
-    data=cat_model.Catagory.objects.all()
+    data=Catagory.objects.all()
     return render(request,"aut.html",{'data':data})

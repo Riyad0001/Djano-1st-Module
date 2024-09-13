@@ -1,0 +1,6 @@
+{% extends "home.html" %}{% block content %}
+<h1>Welcome To Your Profile</h1>
+<button class="btn-warning"></button>
+<a href="{% url 'cng_pass'%}" class="btn btn-warning">Change Your Password</a>
+<a href="{% url 'cng_pass2'%}" class="btn btn-warning">Change Your Password WithOut Old Password</a>
+{% endblock content %}
