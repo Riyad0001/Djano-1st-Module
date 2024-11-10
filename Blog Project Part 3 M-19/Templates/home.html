@@ -1,0 +1,104 @@
+{% extends "base.html" %} {% load static%} {% block content %}
+<div class="d-flex flex-warp">
+  <div class="col-6 p-5">
+    <h1>Welcome to Five Minite's Blog</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eum vel, rem
+      perferendis mollitia porro tenetur, facere quam ducimus omnis expedita
+      neque dolorum optio atque iure cupiditate vitae provident ut aspernatur
+      voluptate beatae ratione voluptatum! Eos amet sunt voluptatem nulla ad
+      impedit earum accusantium expedita temporibus voluptatum dicta, quae
+      veritatis, eaque eius perferendis harum nobis modi molestias commodi
+      incidunt aliquid. Itaque provident distinctio illum accusamus iste
+      explicabo laborum? Rem quibusdam voluptates assumenda itaque sit magni
+      nesciunt cumque consequatur nihil unde atque dolorem animi aliquam labore
+      culpa quod nam laudantium, corrupti illo eum dolor cum. Ipsum magnam
+      repellendus minus assumenda unde?
+    </p>
+  </div>
+  <img src="/static/how-to-write-a-blog-post.jpeg" class="col-6 p-3" alt="" />
+</div>
+<h1 class="text-center m-auto">Explore Blogs</h1>
+<div class="container-fluid p-2">
+  <div class="row">
+    <!-- Sidebar for categories -->
+    <div class="col-lg-2 col-md-3 col-sm-12 p-5 bg-white">
+      <h5>All Categories</h5>
+      {% for cate in catagory %}
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="catagory"
+          id="{{cate.id}}"
+        />
+        <label class="form-check-label" for="{{cate.id}}">
+          <a
+            href="{% url 'catagory_wise_post' cate.slug %}"
+            class="text-decoration-none"
+            >{{cate.name}}</a
+          >
+        </label>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Posts Section -->
+    <div class="col-lg-10 col-md-9 col-sm-12">
+      <div class="d-flex justify-content-between align-items-center py-3">
+        <h3>
+          {{ data | length }} Result{% if data|length != 1 %}s{% endif %} Found
+        </h3>
+      </div>
+
+      <div class="row">
+        {% for items in data %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              {% if items.image %}
+              <img
+                src="{{ items.image.url }}"
+                class="card-img-top"
+                style="width: 100%; height: 40%"
+                alt="..."
+              />
+              {% else %}
+              <img
+                src="{% static 'images/placeholder.jpg' %}"
+                class="card-img-top"
+                style="width: 100%; height: 40%"
+                alt="No image available"
+              />
+              {% endif %}
+              <h5 class="card-title">
+                <a
+                  href="{% url 'post_detail' items.id%}"
+                  class="text-decoration-none text-dark"
+                  >{{ items.title }}</a
+                >
+              </h5>
+              <p class="card-text">{{ items.content|slice:":50" }}...</p>
+              <!-- Shortened content -->
+              <p>
+                <strong>Author:</strong> {{ items.author.first_name }}
+                {{items.author.last_name}}
+              </p>
+              <p>
+                <strong>Category:</strong>
+                {% for cat in items.catagory.all %}
+                <button class="btn btn-primary m-1 btn-sm">
+                  {{ cat.name }}
+                </button>
+                {% endfor %}
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

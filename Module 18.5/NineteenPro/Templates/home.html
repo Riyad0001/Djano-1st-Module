@@ -33,16 +33,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
               <a
                 class="nav-link active"
                 aria-current="page"
-                href="{% url 'signup'%}"
-                >Sign Up</a
+                href="{% url 'homepage'%}"
+                >Home</a
               >
             </li>
+
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
             </li>
@@ -76,21 +74,54 @@
               >
             </li>
           </ul>
-          <form class="d-flex">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a
+              class="nav-link active btn btn-danger m-1"
+              aria-current="page"
+              href="{% url 'logout'%}"
+              >Log Out</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active btn btn-primary m-1"
+              aria-current="page"
+              href="{% url 'profile'%}"
+              >Profile</a
+            >
+          </li>
+          {% else%}
+          <li class="nav-item">
+            <a
+              class="nav-link active btn btn-danger m-1"
+              aria-current="page"
+              href="{% url 'login'%}"
+              >Log In</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active btn btn-warning m-1"
+              aria-current="page"
+              href="{% url 'signup'%}"
+              >Sign Up</a
+            >
+          </li>
+          {% endif %}
         </div>
       </div>
     </nav>
-    {% block content %}{% endblock content %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% block content %}
+    <h1>This Is Homepage</h1>
+    {% endblock content %}
 
     <!-- Optional JavaScript; choose one of the two! -->
 
