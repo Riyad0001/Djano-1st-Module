@@ -1,0 +1,70 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container my-4">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <h1 class="display-4 fw-bold text-primary">Welcome To Car Hub</h1>
+      <p class="mt-4 text-muted" style="text-align: justify">
+        It is a long established fact that a reader will be distracted by the
+        readable content of a page when looking at its layout. The point of
+        using Lorem Ipsum is that it has a more-or-less normal distribution of
+        letters, as opposed to using 'Content here, content here', making it
+        look like readable English. Many desktop publishing packages and web
+        page editors now use Lorem Ipsum as their default model text, and a
+        search for 'lorem ipsum' will uncover many websites still in their
+        infancy. Various versions have evolved over the years, sometimes by
+        accident, sometimes on purpose (injected humour and the like).
+      </p>
+    </div>
+    <div class="col-md-6 text-center">
+      <img
+        src="{% static 'header.jpg'%}"
+        alt="Car Image"
+        class="img-fluid rounded shadow-lg"
+        style="max-height: 400px; object-fit: cover"
+      />
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center align-items-center">
+  {% for dat in brand %}
+  <h1 class="btn btn-primary p-2 ms-5">
+    <a
+      href="{% url 'brand_wise_car' dat.slug %}"
+      class="text-white text-decoration-none"
+      >{{ dat.name }}</a
+    >
+  </h1>
+  {% endfor %}
+</div>
+<h2 class="m-5">Total Car Found : {{data | length}}</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4 m-4">
+  {% for car in data %}
+
+  <div class="col">
+    <div class="card h-100">
+      {% if car.Image %}
+      <img
+        src="{{ car.Image.url }}"
+        class="card-img-top"
+        style="width: 100%; height: 40%"
+        alt="..."
+      />
+      {% else%}
+      <img
+        src="{% static 'header.jpg'%}"
+        class="card-img-top"
+        style="width: 100%; height: 40%"
+        alt="..."
+      />
+      {% endif %}
+      <div class="card-body">
+        <h1 class="card-title">{{car.name}}</h1>
+        <h3 class="card-text">Price: {{car.price}}</h3>
+        <h5 class="btn btn-primary">{{car.Brand.name}}</h5>
+      </div>
+      <h2 class="btn btn-warning m-5">View Details</h2>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}

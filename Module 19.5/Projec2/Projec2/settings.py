@@ -39,8 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Album',
     'Musician',
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,7 +60,7 @@ ROOT_URLCONF = 'Projec2.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['Templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,3 +127,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# LOGIN_REDIRECT_URL = '/'
+# LOGIN_URL='/homepage/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/homepage/'
