@@ -8,3 +8,4 @@ def home(request,brand_slug=None):
         data=models.Car.objects.filter(Brand=brand)
     brand=models.Brand.objects.all()
     return render(request,'home.html',{'data':data,'brand':brand})
+

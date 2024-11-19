@@ -1,0 +1,71 @@
+{% extends "base.html" %} {%load crispy_forms_tags%} {% block content %}
+<div class="container my-3">
+  <div class="row align-items-center">
+    <div class="col-md-7 text-center">
+      <img
+        src="{{ car.Image.url }}"
+        alt="Car Image"
+        class="img-fluid rounded shadow-lg"
+        style="max-height: 500px; object-fit: cover; width: 100%"
+      />
+    </div>
+    <div class="col-md-5">
+      <h1 class="fw-bold text-primary display-3">{{ car.name }}</h1>
+      <h2 class="text-success mt-4">Price: ${{ car.price }}</h2>
+      <h3 class="text-muted">Available Quantity: {{ car.Quantity }}</h3>
+      <p class="mt-4 fs-5" style="text-align: justify">{{ car.Description }}</p>
+      <div class="mt-4">
+        <span class="badge bg-primary fs-4 p-2"
+          >Brand: {{ car.Brand.name }}</span
+        >
+      </div>
+      {% if user.is_authenticated %} {% if car.Quantity > 0 %}
+      <a href="{% url 'buy_now' car.id %}" class="btn btn-warning btn-lg mt-4"
+        >Buy Now</a
+      >
+      {% else %}
+      <button class="btn btn-secondary btn-lg mt-4" disabled>
+        Out of Stock
+      </button>
+      {% endif %} {% else %}
+      <p class="m-3 text-bold">
+        Please
+        <a href="{% url 'login' %}" class="text-primary text-decoration-none"
+          >Login</a
+        >
+        or
+        <a href="{% url 'signup' %}" class="text-primary text-decoration-none"
+          >Sign Up</a
+        >
+        to purchase a car.
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="card bg-light mb-4">
+  <div class="card-body">
+    <h5 class="text-primary mb-3">Total Comments: {{ comments|length }}</h5>
+
+    {% for comment in comments %}
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title text-dark">
+          <span class="fw-bold text-primary">{{ comment.name }}</span>
+          <small class="text-muted">• {{ comment.created_on }}</small>
+        </h6>
+        <p class="card-text text-secondary">{{ comment.body }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<form style="width: 80%; margin: auto" method="post">
+  {% csrf_token %}
+  <h2>Add Comment</h2>
+  {{comments_form | crispy}}
+  <button type="submit" class="btn btn-warning">Submit</button>
+</form>
+{% endblock content %}
