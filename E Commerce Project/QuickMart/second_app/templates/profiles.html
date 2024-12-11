@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block content %}
+<div class="btn btn-primary m-5">
+  <a href="{% url 'update_profile'%}" class="text-white"> Edit Your Profile</a>
+</div>
+<div class="container mt-4">
+  <h1>Your purcsed Products :</h1>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for purc in purchases %}
+    <div class="col">
+      <div class="card h-100">
+        <img
+          src="{{ purc.car.Image.url }}"
+          class="card-img-top"
+          alt="Car Image"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ purc.car.name }}</h5>
+          <p class="card-text">Price: ${{ purc.car.price }}</p>
+          <p class="card-text">Quantity :{{ purc.car.Quantity }}</p>
+          <a href="#" class="btn btn-primary">View Details</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p>You haven't purcd any products yet.</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,8 +1,8 @@
-ACCOUNT_TYPE=(
-    ('Current','Current'),
-    ('Savings','Savings'),
+ACCOUNT_TYPE = (
+    ('Savings', 'Savings'),
+    ('Current', 'Current'),
 )
-GENDER=(
-    ('Male','Male'),
-    ('Female','Female'),
+GENDER_TYPE = (
+    ('Male', 'Male'),
+    ('Female', 'Female'),
 )

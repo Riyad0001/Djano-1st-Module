@@ -1,8 +1,11 @@
-from .views import RegFormView,LoginVieww,LgOutview
-from django.urls import path,include
 
+from django.urls import path
+from .views import UserRegistrationView, UserLoginView, UserLogoutView,UserBankAccountUpdateView
+ 
 urlpatterns = [
-    path('register/',RegFormView.as_view(),name="register"),
-    path('login/',LoginVieww.as_view(),name="login"),
-    path('logout/',LgOutview.as_view(),name="logout"),
+    path('register/', UserRegistrationView.as_view(), name='register'),
+    path('login/', UserLoginView.as_view(), name='login'),
+    path('logout/', UserLogoutView.as_view(), name='logout'),
+    path('profile/', UserBankAccountUpdateView.as_view(), name='profile' )
 ]
+# 01319787108

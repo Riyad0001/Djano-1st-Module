@@ -1,33 +1,12 @@
 {% extends "base.html" %} {% load static %} {% block content %}
-<style>
-  .carousel-img {
-    height: 80vh; /* 80% of viewport height */
-    object-fit: cover; /* Crop and center images */
-  }
-  .carousel-caption h3 {
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for text */
-    padding: 10px;
-    border-radius: 5px;
-    color: white;
-  }
-  .carousel-caption .btn {
-    padding: 10px 20px;
-    font-size: 1.2rem;
-  }
-</style>
 
+<!-- Carousel Section -->
 <section class="container banner-container">
   <div
     id="carouselExampleIndicators"
     class="carousel slide"
     data-bs-ride="carousel"
-    data-bs-interval="1000"
-    <!--
-    Auto-slide
-    every
-    2
-    second
-    --
+    data-bs-interval="2000"
   >
     <div class="carousel-indicators">
       <button
@@ -72,8 +51,8 @@
           alt="Second Slide"
         />
         <div class="carousel-caption d-flex flex-column align-items-center">
-          <h3>Buy, Enjoy, and Explore</h3>
-          <a href="#" class="btn btn-primary mt-3">Shop Now</a>
+          <h3>Shop the Best Deals</h3>
+          <a href="#" class="btn btn-primary mt-3">Explore More</a>
         </div>
       </div>
       <!-- Third Slide -->
@@ -84,12 +63,11 @@
           alt="Third Slide"
         />
         <div class="carousel-caption d-flex flex-column align-items-center">
-          <h3>Buy, Enjoy, and Explore</h3>
-          <a href="#" class="btn btn-primary mt-3">Shop Now</a>
+          <h3>Experience Quality</h3>
+          <a href="#" class="btn btn-primary mt-3">Discover Now</a>
         </div>
       </div>
     </div>
-    <!-- Controls -->
     <button
       class="carousel-control-prev"
       type="button"
@@ -111,5 +89,107 @@
   </div>
 </section>
 
-<h1 class="text-center my-5">This Is Home Page</h1>
+<!-- Filter and Sort Section -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Filter by Catagory</h3>
+      <div class="btn-group">
+        {% for dat in brand %}
+        <a
+          href="{% url 'brand_wise_car' dat.slug %}"
+          class="btn btn-outline-primary"
+          >{{ dat.name }}</a
+        >
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-6 text-end">
+      <h3>Sort by</h3>
+      <select class="form-select" onchange="sortProducts(this)">
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name-asc">Name: A to Z</option>
+        <option value="name-desc">Name: Z to A</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Products Section -->
+<div class="container mt-5">
+  <h2 class="mb-4">Total Products Found: {{ data|length }}</h2>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    {% for car in data %}
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        {% if car.Image %}
+        <img
+          src="{{ car.Image.url }}"
+          class="card-img-top"
+          alt="{{ car.name }}"
+        />
+        {% else %}
+        <img
+          src="{% static 'header.jpg' %}"
+          class="card-img-top"
+          alt="Default Image"
+        />
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ car.name }}</h5>
+          <p class="card-text">
+            <strong>Price:</strong> ${{ car.price }}<br />
+            <strong>Available:</strong> {{ car.Quantity }} in stock
+          </p>
+          <span class="badge bg-primary">{{ car.Brand.name }}</span>
+        </div>
+        <div class="card-footer">
+          <a
+            href="{% url 'post_detail' car.id %}"
+            class="btn btn-warning w-100 text-white"
+            >View Details</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  /* Carousel Styling */
+  .carousel-img {
+    height: 80vh;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-img {
+      height: 50vh;
+    }
+  }
+
+  /* Card Styling */
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .card:hover {
+    transform: scale(1.02);
+    transition: 0.3s ease-in-out;
+  }
+
+  .badge {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+  }
+
+  .container {
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+</style>
+
 {% endblock content %}
