@@ -25,6 +25,12 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView,ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+
+def search_products(request):
+    query = request.GET.get('q', '')  # Retrieve the search query from the request
+    results = models.Product.objects.filter(name__icontains=query) if query else models.Product.objects.none()
+    return render(request, 'search_results.html', {'query': query, 'results': results})
+    
 def registerForm(request):
     if request.method=="POST":
         reg_form=forms.Registratin_form(request.POST)
